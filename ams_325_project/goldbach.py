@@ -1,5 +1,4 @@
 def sieve(n):
-    
     # Create a n-element True array
     prime_list_temp = [True for i in range(n+1)]
     
@@ -10,7 +9,7 @@ def sieve(n):
     prime_list_temp[0] = False
     prime_list_temp[1] = False
     
-    # Find sqrt of n
+    # Find an estimate sqrt of n
     for i in range(n):
         res = i*i
         if res > n:
@@ -28,7 +27,7 @@ def sieve(n):
             
     return prime_list
 
-    def goldbach(n):
+def goldbach(n):
     list = sieve(n)
     goldbach = []
     for i in range(4, n+1, 2):
@@ -61,7 +60,7 @@ import pandas as pd
 import numpy as np
 from drawnow import drawnow
 
-N_max = 10000
+N_max = int(input("Enter an upper bound number: "))
 
 prime_list = sieve(N_max)
 
