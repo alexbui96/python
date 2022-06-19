@@ -28,6 +28,33 @@ def sieve(n):
             
     return prime_list
 
+    def goldbach(n):
+    list = sieve(n)
+    goldbach = []
+    for i in range(4, n+1, 2):
+        j = 0
+        while list[j] <= i/2:
+            if (i - list[j]) in list:
+                goldbach.append((i, list[j], i-list[j]))
+            
+            j = j + 1
+                    
+    return goldbach
+
+def goldbach_partition(n):
+    list = goldbach(n)
+    goldbach_partition_list =[]
+    for i in range(4, n+1, 2):
+        temp = 0
+        
+        for j in range(len(list)):
+            if list[j][0] == i:
+                temp = temp + 1
+        goldbach_partition_list.append((i, temp))
+    
+    return goldbach_partition_list
+
+
 
 import matplotlib.pyplot as plt
 import pandas as pd
