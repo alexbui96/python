@@ -5,11 +5,11 @@ def sieve(n):
     # Create a empty prime list
     prime_list = []
     
-    # Assign False value for 0 and 1
+    # 0 and 1 are not prime
     prime_list_temp[0] = False
     prime_list_temp[1] = False
     
-    # Find an estimate sqrt of n
+    # Find an estimate square roott of n
     for i in range(n):
         res = i*i
         if res > n:
@@ -27,31 +27,31 @@ def sieve(n):
             
     return prime_list
 
-def goldbach(n):
-    list = sieve(n)
+def goldbach_list(n):
+    prime_list = sieve(n)
     goldbach = []
     for i in range(4, n+1, 2):
         j = 0
-        while list[j] <= i/2:
-            if (i - list[j]) in list:
-                goldbach.append((i, list[j], i-list[j]))
-            
+        while prime_list[j] <= i/2:
+            if (i - prime_list[j]) in list:
+                goldbach.append((i, prime_list[j], i-prime_list[j]))
             j = j + 1
                     
     return goldbach
 
-def goldbach_partition(n):
-    list = goldbach(n)
-    goldbach_partition_list =[]
+def goldbach_partition_count(n):
+    gb_list = goldbach_list(n)
+    count_list =[]
     for i in range(4, n+1, 2):
         temp = 0
         
-        for j in range(len(list)):
-            if list[j][0] == i:
+        for j in range(len(gb_list)):
+            if gb_list[j][0] == i:
                 temp = temp + 1
-        goldbach_partition_list.append((i, temp))
+        
+        count_list.append((i, temp))
     
-    return goldbach_partition_list
+    return count_list
 
 
 
