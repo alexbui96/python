@@ -19,4 +19,4 @@ for j in range(N_max):
 
 plt.imshow(mask.T, extent= [-2, 1, -1.5, 1.5])
 plt.gray()
-plt.savefig('mandelbrot1.png')
+plt.savefig('mandelbrot_1.png')
