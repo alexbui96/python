@@ -1,3 +1,6 @@
+from matplotlib.pyplot import plot
+
+
 def sieve(n):
     # Create a n-element True array
     prime_list_temp = [True for i in range(n+1)]
@@ -90,4 +93,9 @@ def plot_mod_6(n):
         drawnow(makeFig)
         plt.pause(.0001)
 
-plot_mod_6(1000)
+def main():
+    n = int(input("Enter upper bound number: "))
+    plot_mod_6(n)
+
+if __name__ == '__main__':
+    main()
