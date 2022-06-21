@@ -56,7 +56,7 @@ def plot_mod_6(n):
     import pandas as pd
     from drawnow import drawnow
 
-    prime_list = sieve(n)
+    gb_dict = goldbach_dict(n)
 
     mod_0 = []
     mod_0_p = []
@@ -74,12 +74,7 @@ def plot_mod_6(n):
 
 
     for i in range (4, n + 1, 2):
-        temp = 0
-        j = 0
-        while prime_list[j] <= i/2:
-            if (i - prime_list[j]) in prime_list:
-                temp += 1
-            j += 1
+        temp = len(gb_dict[i])
         print(i,temp)
         
         if i%6 == 0:
@@ -94,3 +89,5 @@ def plot_mod_6(n):
         
         drawnow(makeFig)
         plt.pause(.0001)
+
+plot_mod_6(1000)
