@@ -1,5 +1,6 @@
+# Function to generate prime numbers list up to n using sieve method
 def sieve(n):
-    # Create a n-element True array
+    # Create a n-element True array (tempurary prime list)
     prime_list_temp = [True for i in range(n+1)]
     
     # Create a empty prime list
@@ -12,11 +13,14 @@ def sieve(n):
     # Find an estimate square root of n
     for i in range(n):
         res = i*i
+        # stop when reach 
         if res > n:
             break
-    # Assign False (not prime) for multiple of prime number
+        
+    # Assign True for primes and False for composites
     for j in range(2, i):
         if prime_list_temp[j]:
+            # Assign False (not prime) for multiple of prime number
             for m in range(j*j, n+1, j):
                 prime_list_temp[m] = False
     
@@ -27,30 +31,31 @@ def sieve(n):
             
     return prime_list
 
-
-def goldbach_dict(n):
+# Function to create a dictionary for Goldbach's conjecture
+# The keys are even numbers up to n
+# Their corresponding values are Goldbach pairs
+def strong_goldbach_dict(n):
     # Create a prime list up to n
     prime_list = sieve(n)
-    temp = []
-    gb_dict = {}
+    strong_gb_dict = {}
     for i in range(4, n+1, 2):
         j = 0
         while prime_list[j] <= i/2:
             if (i - prime_list[j]) in prime_list:
-                gb_dict[i] = gb_dict.get(i,temp) + [(prime_list[j],i-prime_list[j])]
+                strong_gb_dict[i] = strong_gb_dict.get(i,[]) + [(prime_list[j],i-prime_list[j])]
             j +=  1
                     
-    return gb_dict
+    return strong_gb_dict
 
 def goldbach_partition_count(n):
-    gb_dict = goldbach_dict(n)
+    gb_dict = strong_goldbach_dict(n)
     count_list =[]
     for i in range(4, n+1, 2):  
         count_list.append((i, len(gb_dict[i])))
     
     return count_list
 
-def plot_mod_6(n):
+def plot_strong_gb_mod_3(n):
 
     import matplotlib.pyplot as plt
     import pandas as pd
@@ -60,18 +65,18 @@ def plot_mod_6(n):
 
     mod_0 = []
     mod_0_p = []
+    mod_1 = []
+    mod_1_p = []
     mod_2 = []
     mod_2_p = []
-    mod_4 = []
-    mod_4_p = []
 
     plt.ion()
 
+    # Function to plot Goldbach partitions for drawnow()
     def makeFig():
         plt.plot(mod_0, mod_0_p, 'r.')
-        plt.plot(mod_2, mod_2_p, 'y.')
-        plt.plot(mod_4, mod_4_p, 'b.')
-
+        plt.plot(mod_1, mod_1_p, 'y.')
+        plt.plot(mod_2, mod_2_p, 'b.')
 
     for i in range (4, n + 1, 2):
         temp = 0
@@ -82,15 +87,51 @@ def plot_mod_6(n):
             j += 1
         print(i,temp)
         
-        if i%6 == 0:
+        if i%3 == 0:
             mod_0.append(i)
             mod_0_p.append(temp)
-        elif i%6 == 2:
+        elif i%3 == 1:
+            mod_1.append(i)
+            mod_1_p.append(temp)
+        else:
             mod_2.append(i)
             mod_2_p.append(temp)
-        else:
-            mod_4.append(i)
-            mod_4_p.append(temp)
         
         drawnow(makeFig)
         plt.pause(.0001)
+    
+def main():
+    
+    n = 0
+    while n != -1:
+        n = int(input("Enter upper bound number(Enter -1 to quit): "))
+        if n == -1:
+            break
+        try:
+            if n < 4:
+                raise ValueError
+            else:
+                break
+        except ValueError:
+            print("Invalid input number!")
+            n = int(input("Enter upper bound number (Enter -1 to quit): "))
+    
+    while n >= 4:
+        case = int(input("Enter option (Enter -1 to quit): "))
+        if case == -1:
+            break
+        elif case == 1:
+            print(sieve(n))
+            break
+        elif case == 2:
+            print(strong_goldbach_dict(n))
+            break
+        elif case == 3:
+            print(goldbach_partition_count(n))
+            break
+        elif case == 4:
+            plot_strong_gb_mod_3(n)
+            break
+        
+if __name__ == "__main__":
+    main()
