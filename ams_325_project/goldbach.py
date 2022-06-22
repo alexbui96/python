@@ -1,4 +1,7 @@
 # Function to generate prime numbers list up to n using sieve method
+from sympy import elliptic_f
+
+
 def sieve(n):
     # Create a n-element True array (tempurary prime list)
     prime_list_temp = [True for i in range(n+1)]
@@ -114,24 +117,30 @@ def main():
                 break
         except ValueError:
             print("Invalid input number!")
-            n = int(input("Enter upper bound number (Enter -1 to quit): "))
     
+    valid = False
     while n >= 4:
         case = int(input("Enter option (Enter -1 to quit): "))
         if case == -1:
             break
-        elif case == 1:
+        elif case not in range (1,5):
+            print("Invalid input!")
+        elif case in range(1,5):
+            valid = True
+            break
+    
+    def run(case):
+        if case == 1:
             print(sieve(n))
-            break
         elif case == 2:
-            print(strong_goldbach_dict(n))
-            break
+            print(strong_goldbach_dict)
         elif case == 3:
-            print(goldbach_partition_count(n))
-            break
+            print(goldbach_partition_count)
         elif case == 4:
             plot_strong_gb_mod_3(n)
-            break
+            
+    if valid:
+        run(case)
         
 if __name__ == "__main__":
     main()
