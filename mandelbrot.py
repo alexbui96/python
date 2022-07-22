@@ -1,9 +1,13 @@
+# some useful libraries
 import matplotlib.pyplot as plt
 import numpy as np
+
+# ignore errors
 np.warnings.filterwarnings("ignore")
 
 # Function generate mandelbrot set
 def mandelbrot(n, N_max, threshold):
+
     # Create points (x,y) in range [-2, 1]x[-1.5, 1.5]
     x, y = np.linspace(-2, 1, n)[:, np.newaxis], np.linspace(-1.5, 1.5, n)[np.newaxis, :]
 
